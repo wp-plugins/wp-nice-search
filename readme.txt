@@ -4,7 +4,7 @@ Donate link: http://duywp.com/
 Tags: search, ajax, jquery, form
 Requires at least: 3.9
 Tested up to: 4.2.2
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,17 +32,14 @@ You can install the plugin by two ways:
 
 1. Through Wordpress admin panel:
 
-	Goto "Plugins -> Add new". Type "w3topbar" into search box.
-
-	Then click "Install Now" button and activate it.
-
-	* if you have one, just click "Upload plugin" on the top and choose the plugin zip file.
+	- Goto "Plugins -> Add new". Type "w3topbar" into search box.
+	- Then click "Install Now" button and activate it.
+	(if you have one, just click "Upload plugin" on the top and choose the plugin zip file.)
 
 2. Upload through FTP
 
-	Upload plugin folder into plugins directory.
-
-	Activate it in admin.
+	- Upload plugin folder into plugins directory.
+	- Activate it in admin.
 
 == Frequently Asked Questions ==
 
@@ -50,8 +47,14 @@ If you have any ideas or got any issues please send me an email to duyngha@gmail
 
 == Screenshots ==
 1. Searching with ajax
+2. Plugin admin settings page
 
 == Changelog ==
+
+= 1.0.2 =
+* Add: Create plugin admin page
+* Add: Clear up after delete the plugin
+* Release Date 09/10/2015
 
 = 1.0.1 =
 * Fixed: duplicate results list
@@ -62,6 +65,11 @@ If you have any ideas or got any issues please send me an email to duyngha@gmail
 Publish plugin
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+* Add: Create plugin admin page
+* Add: Clear up after delete the plugin
+* Release Date 09/10/2015
 
 = 1.0.1 =
 * Fixed: duplicate results list

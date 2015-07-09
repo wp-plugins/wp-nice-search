@@ -21,6 +21,7 @@ class WPNS_Form {
 	 */
 	public function wpns_form_render() {
 		ob_start();
+		$settings = get_option( 'wpns_options' );
 		include WPNS_DIR . '/templates/form.php';
 		return ob_get_clean();
 	}

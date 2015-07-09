@@ -10,13 +10,13 @@ class WPNS_SEARCH_DATA {
 	 */
 	function __construct() {
 
-		add_action( 'template_redirect', array(&$this, 'wpns_register_script') );
+		add_action( 'template_redirect', array( &$this, 'wpns_register_script') );
 
 		// enable ajax for logged-in user
-		add_action( 'wp_ajax_wpns_search_ajax', array(&$this, 'wpns_search_data') );
+		add_action( 'wp_ajax_wpns_search_ajax', array( &$this, 'wpns_search_data') );
 
 		// enabled ajax for visitors user
-		add_action( 'wp_ajax_nopriv_wpns_search_ajax', array(&$this, 'wpns_search_data') );
+		add_action( 'wp_ajax_nopriv_wpns_search_ajax', array( &$this, 'wpns_search_data') );
 	}
 
 	/**
@@ -39,13 +39,44 @@ class WPNS_SEARCH_DATA {
 	 */
 	public function wpns_search_data() {
 		global $wpdb;
+		$settings = get_option( 'wpns_options' );
+		
+		if ( $settings['wpns_in_all'] == 'on' || ( $settings['wpns_in_post'] == 'on' && $settings['wpns_in_page'] == 'on' && $settings['wpns_in_custom_post_type'] == 'on' )) {
+			$t = "post_type NOT IN ('revision', '_pods_pod')";
+		}
+
+		if ( $settings['wpns_in_post'] == 'on' && $settings['wpns_in_page'] == null && $settings['wpns_in_custom_post_type'] == null ) {
+			$t = "post_type = 'post'";
+		}
+
+		if ( $settings['wpns_in_post'] == null && $settings['wpns_in_page'] == 'on' && $settings['wpns_in_custom_post_type'] == null ) {
+			$t = "post_type = 'page'";
+		}
+
+		if ( $settings['wpns_in_post'] == null && $settings['wpns_in_page'] == null && $settings['wpns_in_custom_post_type'] == 'on' ) {
+			$t = "post_type NOT IN ('revision', 'post', '_pods_pod', 'page')";
+		}
+
+		if ( $settings['wpns_in_post'] == 'on' && $settings['wpns_in_page'] == 'on' && $settings['wpns_in_custom_post_type'] == null ) {
+			$t = "post_type IN ('post', 'page')";
+		}
+
+		if ( $settings['wpns_in_post'] == null && $settings['wpns_in_page'] == 'on' && $settings['wpns_in_custom_post_type'] == 'on' ) {
+			$t = "post_type NOT IN ('revision', 'post', '_pods_pod')";
+		}
+
+		if ( $settings['wpns_in_post'] == 'on' && $settings['wpns_in_page'] == null && $settings['wpns_in_custom_post_type'] == 'on' ) {
+			$t = "post_type NOT IN ('revision', 'page', '_pods_pod')";
+		}
+
+
 		$keyword = $_POST['keyword'];
 		if ($keyword == '') {
 			echo '<div class="wpns_results_list">No Posts were found</div>';
 		} else {
 			$keyword = str_replace(' ', '%', $keyword);
 
-			$sql = "SELECT * FROM $wpdb->posts WHERE post_status = 'publish' AND (post_type = 'post' OR post_type = 'page') AND (post_content LIKE '%$keyword%' OR post_title LIKE '%$keyword%')";
+			$sql = "SELECT * FROM $wpdb->posts WHERE post_status = 'publish' AND ($t) AND (post_content LIKE '%$keyword%' OR post_title LIKE '%$keyword%')";
 			$results = $wpdb->get_results($sql);
 			echo $this->wpns_render_results_list($results);
 		}
