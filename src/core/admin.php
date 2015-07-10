@@ -46,7 +46,6 @@ class WPNS_Admin {
 		add_action( 'admin_menu', array( &$this, 'wpns_add_plugin_page' ) );
 		add_action( 'admin_init', array( &$this, 'wpns_admin_init' ) );
 		add_action( 'admin_enqueue_scripts', array( &$this, 'wpns_admin_script' ) );
-		update_option( 'wpns_options', $this->settings );
 		$this->wpns_get_options( 'wpns_options' );
 	}
 
