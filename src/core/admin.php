@@ -161,7 +161,7 @@ class WPNS_Admin {
 	public function wpns_validate_options( $input ) {
 
 		$valid = array();
-		$valid['wpns_placeholder'] = preg_replace( '/[^a-zA-Z]/', '', $input['wpns_placeholder'] );
+		$valid['wpns_placeholder'] = preg_replace( '/[^a-zA-Z. ]/', '', $input['wpns_placeholder'] );
 
 		// checkbox value
 		$valid['wpns_in_all'] = $input['wpns_in_all'];
