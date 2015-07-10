@@ -42,7 +42,7 @@ class WPNS_SEARCH_DATA {
 		$settings = get_option( 'wpns_options' );
 		
 		if ( $settings['wpns_in_all'] == 'on' || ( $settings['wpns_in_post'] == 'on' && $settings['wpns_in_page'] == 'on' && $settings['wpns_in_custom_post_type'] == 'on' )) {
-			$t = "post_type NOT IN ('revision', '_pods_pod')";
+			$t = "post_type NOT IN ('revision', '_pods_pod', 'attachment', 'acf-field', 'acf-field-group', 'nav_menu_item')";
 		}
 
 		if ( $settings['wpns_in_post'] == 'on' && $settings['wpns_in_page'] == null && $settings['wpns_in_custom_post_type'] == null ) {
@@ -54,7 +54,7 @@ class WPNS_SEARCH_DATA {
 		}
 
 		if ( $settings['wpns_in_post'] == null && $settings['wpns_in_page'] == null && $settings['wpns_in_custom_post_type'] == 'on' ) {
-			$t = "post_type NOT IN ('revision', 'post', '_pods_pod', 'page')";
+			$t = "post_type NOT IN ('revision', 'post', '_pods_pod', 'page', 'attachment', 'acf-field', 'acf-field-group', 'nav_menu_item')";
 		}
 
 		if ( $settings['wpns_in_post'] == 'on' && $settings['wpns_in_page'] == 'on' && $settings['wpns_in_custom_post_type'] == null ) {
@@ -62,11 +62,11 @@ class WPNS_SEARCH_DATA {
 		}
 
 		if ( $settings['wpns_in_post'] == null && $settings['wpns_in_page'] == 'on' && $settings['wpns_in_custom_post_type'] == 'on' ) {
-			$t = "post_type NOT IN ('revision', 'post', '_pods_pod')";
+			$t = "post_type NOT IN ('revision', 'post', '_pods_pod', 'attachment', 'acf-field', 'acf-field-group', 'nav_menu_item')";
 		}
 
 		if ( $settings['wpns_in_post'] == 'on' && $settings['wpns_in_page'] == null && $settings['wpns_in_custom_post_type'] == 'on' ) {
-			$t = "post_type NOT IN ('revision', 'page', '_pods_pod')";
+			$t = "post_type NOT IN ('revision', 'page', '_pods_pod', 'attachment', 'acf-field', 'acf-field-group', 'nav_menu_item')";
 		}
 
 
