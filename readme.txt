@@ -67,6 +67,7 @@ Publish plugin
 == Upgrade Notice ==
 
 = 1.0.2 =
+* Fixed: Save settings in admin page
 * Add: Create plugin admin page
 * Add: Clear up after delete the plugin
 * Release Date 09/10/2015

@@ -14,4 +14,6 @@ define( 'WPNS_URL', plugin_dir_url( __FILE__ ) );
 
 define( 'WPNS_PLUGIN_VER', '1.0.2');
 
+define( 'WPNS_REQUIRE_VER', '3.9');
+
 require WPNS_DIR . '/src/loader.php';
