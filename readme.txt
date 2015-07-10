@@ -4,7 +4,7 @@ Donate link: http://duywp.com/
 Tags: search, ajax, jquery, form
 Requires at least: 3.9
 Tested up to: 4.2.2
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,6 +51,9 @@ If you have any ideas or got any issues please send me an email to duyngha@gmail
 
 == Changelog ==
 
+= 1.0.3 =
+* Fixed: Save settings in admin page
+
 = 1.0.2 =
 * Add: Create plugin admin page
 * Add: Clear up after delete the plugin
@@ -65,6 +68,9 @@ If you have any ideas or got any issues please send me an email to duyngha@gmail
 Publish plugin
 
 == Upgrade Notice ==
+
+= 1.0.3 =
+* Fixed: Save settings in admin page
 
 = 1.0.2 =
 * Fixed: Save settings in admin page
