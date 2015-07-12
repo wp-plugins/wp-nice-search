@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WP Nice Search
  * Description: Live search for wordpress
- * Version: 1.0.3
+ * Version: 1.0.4
  * Author: Duy Nguyen
  * Author URI: duywp.com
  * License: GPL v2

@@ -14,11 +14,16 @@ register_activation_hook( WPNS_DIR . '/wp-nice-search.php', 'wpns_plugin_activat
 function wpns_plugin_activate() {
 
 	$default_settings = array(
+		// global options
 		'wpns_in_all' => null,
 		'wpns_in_post' => 'on',
 		'wpns_in_page' => null,
 		//'wpns_in_category' => null,
 		'wpns_in_custom_post_type' => null,
+		'wpns_items_featured' => null,
+		'chk_items_meta' => null,
+
+		// options for form
 		'wpns_placeholder' => 'Type your words here...',
 	);
 

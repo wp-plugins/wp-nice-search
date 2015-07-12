@@ -76,9 +76,18 @@ class WPNS_SEARCH_DATA {
 		} else {
 			$keyword = str_replace(' ', '%', $keyword);
 
-			$sql = "SELECT * FROM $wpdb->posts WHERE post_status = 'publish' AND ($t) AND (post_content LIKE '%$keyword%' OR post_title LIKE '%$keyword%')";
+			$sql = "SELECT * FROM $wpdb->posts WHERE post_status = 'publish' AND ($t) AND (post_title LIKE '%$keyword%')";
+			//$sql = "SELECT * FROM $wpdb->posts WHERE post_status = 'publish' AND ($t) AND (post_content LIKE '%$keyword%' OR post_title LIKE '%$keyword%')";
 			$results = $wpdb->get_results($sql);
-			echo $this->wpns_render_results_list($results);
+			if ( $settings['wpns_items_featured'] == 'on' && $settings['chk_items_meta'] == 'on' ) {
+				echo $this->wpns_render_results_list_meta_featured($results);
+			} elseif ( $settings['wpns_items_featured'] == 'on' ) {
+				echo $this->wpns_render_results_list_featured($results);	
+			} elseif( $settings['chk_items_meta'] == 'on' ) {
+				echo $this->wpns_render_results_list_meta($results);
+			} else {
+				echo $this->wpns_render_results_list($results);
+			}
 		}
 
 		wp_die();
@@ -109,7 +118,136 @@ class WPNS_SEARCH_DATA {
 						break;
 				}
 
-				$results_str .= '<li>'. $type_icon . ' <a href="' . $url . '">' . $title . '</a></li>';
+				$results_str .= '<li><span class="wpns-items-pre">'. $type_icon . '</span> <span class="list-item-box"><a href="' . $url . '">' . $title . '</a></span></li>';
+			}
+			$results_str .= '</ul>';
+		} else {
+			$results_str = '<div class="wpns_results_list">No Posts were found</div>';
+		}
+
+		return $results_str;
+
+	}
+
+	/**
+	 * Layout of results list with featured images
+	 * @param array $data A array is passed to get data from database
+	 * 
+	 * @return string $results_str
+	 */
+
+	public function wpns_render_results_list_featured(array $data) {
+		$results_str = '';
+		if (!empty($data)) {
+			$results_str .= '<ul class="wpns_results_list">';
+			foreach ($data as $key => $val) {
+				$id = $val->ID;
+				$url = get_permalink($id);
+				$title = $val->post_title;
+				$type = $val->post_type;
+				$featured_url = wp_get_attachment_thumb_url( get_post_thumbnail_id( $id ) );
+				if (!$featured_url) {
+					$featured_url = WPNS_URL . 'assist/images/no_photo.jpg';
+				}
+
+				$results_str .= '<li><span class="wpns-items-pre"><img src="'. $featured_url . '" alt="items-featured" /></span> <span class="list-item-box"><a href="' . $url . '">' . $title . '</a></span></li>';
+			}
+			$results_str .= '</ul>';
+		} else {
+			$results_str = '<div class="wpns_results_list">No Posts were found</div>';
+		}
+
+		return $results_str;
+
+	}
+
+	/**
+	 * Layout of results list with meta section
+	 * @param array $data A array is passed to get data from database
+	 * 
+	 * @return string $results_str
+	 */
+
+	public function wpns_render_results_list_meta(array $data) {
+		$results_str = '';
+		if (!empty($data)) {
+			$results_str .= '<ul class="wpns_results_list">';
+			foreach ($data as $key => $val) {
+				$id = $val->ID;
+				$url = get_permalink( $id );
+				$title = $val->post_title;
+				$type = $val->post_type;
+				$date = get_the_date( 'd M, Y', $id );
+				$author = get_user_meta( $val->post_author );
+
+				if ( $author['first_name'][0] == '' && $author['last_name'][0] == '' ) {
+					$author_name = $author['nickname'][0];
+				} else {
+					$author_name = $author['first_name'][0] . ' ' . $author['last_name'][0];
+				}
+
+				$terms = $this->custom_taxonomies_terms_links( $id );
+
+				switch ($type) {
+					case 'post':
+						$type_icon = '<i class="fa fa-file-text-o"></i>';
+						break;
+					case 'page':
+						$type_icon = '<i class="fa fa-file-powerpoint-o"></i>';
+						break;
+					default:
+						$type_icon = '<i class="fa fa-file-code-o"></i>';
+						break;
+				}
+
+				$results_str .= '<li><span class="wpns-items-pre">'. $type_icon . '</span> <span class="list-item-box"><a href="' . $url . '">' . $title . '</a>';
+				$results_str .= '<br><span class="wpns-meta"><i><span class="wpns-author">' . $author_name . '</span> / <span class="wpns-date">' . $date . '</span><span class="wpns-cate">' . $terms . '</span></i></span></span>';
+				$results_str .=  '</li>';
+			}
+			$results_str .= '</ul>';
+		} else {
+			$results_str = '<div class="wpns_results_list">No Posts were found</div>';
+		}
+
+		return $results_str;
+
+	}
+
+	/**
+	 * Layout of results list with meta section
+	 * @param array $data A array is passed to get data from database
+	 * 
+	 * @return string $results_str
+	 */
+
+	public function wpns_render_results_list_meta_featured(array $data) {
+		$results_str = '';
+		if (!empty($data)) {
+			$results_str .= '<ul class="wpns_results_list">';
+			foreach ($data as $key => $val) {
+				$id = $val->ID;
+				$url = get_permalink( $id );
+				$title = $val->post_title;
+				$type = $val->post_type;
+				$date = get_the_date( 'd M, Y', $id );
+				$author = get_user_meta( $val->post_author );
+
+				if ( $author['first_name'][0] == '' && $author['last_name'][0] == '' ) {
+					$author_name = $author['nickname'][0];
+				} else {
+					$author_name = $author['first_name'][0] . ' ' . $author['last_name'][0];
+				}
+
+				$terms = $this->custom_taxonomies_terms_links( $id );
+
+				$featured_url = wp_get_attachment_thumb_url( get_post_thumbnail_id( $id ) );
+				if (!$featured_url) {
+					$featured_url = WPNS_URL . 'assist/images/no_photo.jpg';
+				}
+
+				$results_str .= '<li><span class="wpns-items-pre"><img src="'. $featured_url . '" alt="items-featured" /></span> <span class="list-item-box"><a href="' . $url . '">' . $title . '</a>';
+				$results_str .= '<br><span class="wpns-meta"><i><span class="wpns-author">' . $author_name . '</span> / <span class="wpns-date">' . $date . '</span><span class="wpns-cate">' . $terms . '</span></i></span></span>';
+				$results_str .=  '</li>';
 			}
 			$results_str .= '</ul>';
 		} else {
@@ -119,5 +257,45 @@ class WPNS_SEARCH_DATA {
 		return $results_str;
 
 	}	
+
+	// get taxonomies terms links
+	public function custom_taxonomies_terms_links( $post_id ){
+		// get post by post id
+		$post = get_post( $post_id );
+
+		// get post type by post
+		$post_type = $post->post_type;
+
+		// get post type taxonomies
+		$taxonomies = get_object_taxonomies( $post_type, 'objects' );
+
+		$out = array();
+
+		foreach ( $taxonomies as $taxonomy_slug => $taxonomy ){
+
+			// get the terms related to post
+			$terms = get_the_terms( $post->ID, $taxonomy_slug );
+
+			if ($terms != false) {
+				if ( !empty( $terms ) ) {
+					foreach ( $terms as $key => $term ) {
+						if ($term->taxonomy != 'post_tag') {
+							$out[] = $term->name . '<span class="comma">, </span>';
+						}
+					}
+				}
+				$flag = true;
+			}
+
+		}
+
+		if ( isset($flag) ) {
+			array_unshift( $out, ' / ');
+		}
+
+		return implode('', $out );
+	}
+
 } // end class WPNS_SEARCH_DATA
+
 new WPNS_SEARCH_DATA;

@@ -30,11 +30,16 @@ class WPNS_Admin {
 	 * @var array $settings A array holds default values and updated values
 	 */
 	protected $settings = array(
+		// global options
 		'wpns_in_all' => null,
 		'wpns_in_post' => 'on',
 		'wpns_in_page' => null,
 		//'wpns_in_category' => null,
 		'wpns_in_custom_post_type' => null,
+		'wpns_items_featured' => null,
+		'chk_items_meta' => null,
+
+		// options for form
 		'wpns_placeholder' => 'Type your words here...',
 	);
 
@@ -87,6 +92,8 @@ class WPNS_Admin {
 		add_settings_section( 'wpns_group_1', '', array( &$this, 'wpns_section_1'), $this->menu_slug );
 		add_settings_field( 'wpns_checkbox', 'Search In', array( &$this, 'wpns_setting_checkbox' ), $this->menu_slug, 'wpns_group_1' );
 
+		add_settings_field( 'wpns_fields_group_3', 'Options', array( &$this, 'wpns_setting_group_3' ), $this->menu_slug, 'wpns_group_1' );
+
 		add_settings_section( 'wpns_group_2', '', array( &$this, 'wpns_section_2'), $this->menu_slug );
 		add_settings_field( 'wpns_text', 'Placeholder Text', array( &$this, 'wpns_setting_text' ), $this->menu_slug, 'wpns_group_2' );
 	}
@@ -106,17 +113,17 @@ class WPNS_Admin {
 		<fieldset>
 			<label>
 				<input type="checkbox" id="chk_all" name="wpns_options[wpns_in_all]" <?php echo ($this->settings['wpns_in_all'] == 'on') ? 'checked' : ''; ?> />
-				All
+				<i>All</i>
 			</label>
 			<br>
 			<label>
 				<input type="checkbox" class="chk_items" name="wpns_options[wpns_in_post]" <?php echo ($this->settings['wpns_in_post'] == 'on') ? 'checked' : ''; ?> />
-				Post
+				<i>Post</i>
 			</label>
 			<br>
 			<label>
 				<input type="checkbox" class="chk_items" name="wpns_options[wpns_in_page]" <?php echo ($this->settings['wpns_in_page'] == 'on') ? 'checked' : ''; ?> />
-				Page
+				<i>Page</i>
 			</label>
 			<br>
 			<!--label>
@@ -126,7 +133,7 @@ class WPNS_Admin {
 			<br-->
 			<label>
 				<input type="checkbox" class="chk_items" name="wpns_options[wpns_in_custom_post_type]" <?php echo ($this->settings['wpns_in_custom_post_type'] == 'on') ? 'checked' : ''; ?> />
-				Custom post type
+				<i>Custom post type</i>
 			</label>
 			<br>
 		</fieldset>
@@ -145,11 +152,29 @@ class WPNS_Admin {
 	 */
 	public function wpns_setting_text() {
 		// get option value from database
-/*		$options = get_option( 'wpns_options' );
-		var_dump($options);*/
 		$text_string = $this->settings['wpns_placeholder'];
 		// echo the field
 		echo '<input type="text" id="wpns_placeholder" name="wpns_options[wpns_placeholder]" value="' . $text_string . '"/>';
+	}
+
+	/**
+	 * Display and fill the field group 3
+	 */
+	public function wpns_setting_group_3() {
+		?>
+		<fieldset>
+			<label>
+				<input type="checkbox" id="chk_items_featured" name="wpns_options[wpns_items_featured]" <?php echo ($this->settings['wpns_items_featured'] == 'on') ? 'checked' : ''; ?> />
+				<i>Display featured</i>
+			</label>
+			<br>
+			<label>
+				<input type="checkbox" class="chk_items_meta" name="wpns_options[chk_items_meta]" <?php echo ($this->settings['chk_items_meta'] == 'on') ? 'checked' : ''; ?> />
+				<i>Display meta section (Author, Date, Taxonomy)</i>
+			</label>
+			<br>
+		</fieldset>
+		<?php
 	}
 
 	/**
@@ -169,6 +194,8 @@ class WPNS_Admin {
 		$valid['wpns_in_page'] = $input['wpns_in_page'];
 		//$valid['wpns_in_category'] = $input['wpns_in_category'];
 		$valid['wpns_in_custom_post_type'] = $input['wpns_in_custom_post_type'];
+		$valid['wpns_items_featured'] = $input['wpns_items_featured'];
+		$valid['chk_items_meta'] = $input['chk_items_meta'];
 
 		return $valid;
 	}

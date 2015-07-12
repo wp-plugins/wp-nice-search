@@ -4,7 +4,7 @@ Donate link: http://duywp.com/
 Tags: search, ajax, jquery, form
 Requires at least: 3.9
 Tested up to: 4.2.2
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,6 +13,11 @@ Using Ajax to searching
 == Description ==
 
 WP Nice Search plugin allows you searching in your site with ajax.
+
+= Featured =
+* Search using ajax to recieve results
+* Allow to display the featured icon, metapost info (author, date, taxonomy...)
+* Custom the search form
 
 = How to use =
 
@@ -46,10 +51,16 @@ You can install the plugin by two ways:
 If you have any ideas or got any issues please send me an email to duyngha@gmail.com or bug reports for [wp-nice-search on GitHub](https://github.com/duyngha/wp-nice-search).
 
 == Screenshots ==
-1. Searching with ajax
-2. Plugin admin settings page
+1. Only display post title (default)
+2. Display post title and metabox (optional)
+3. Display post title and featured image (optional)
+4. Display post title, metabox, featured image (optional)
+5. Plugin admin settings page
 
 == Changelog ==
+
+= 1.0.4 =
+* Add: Add 2 options allow to display the featured and metapost info within resutls list
 
 = 1.0.3 =
 * Fixed: Save settings in admin page
@@ -69,14 +80,19 @@ Publish plugin
 
 == Upgrade Notice ==
 
+= 1.0.4 =
+* Add: Add 2 options allow to display the featured and metapost info within resutls list
+* Release Date 11/07/2015
+
 = 1.0.3 =
 * Fixed: Save settings in admin page
+* Release Date 10/70/2015
 
 = 1.0.2 =
 * Fixed: Save settings in admin page
 * Add: Create plugin admin page
 * Add: Clear up after delete the plugin
-* Release Date 09/10/2015
+* Release Date 09/07/2015
 
 = 1.0.1 =
 * Fixed: duplicate results list
